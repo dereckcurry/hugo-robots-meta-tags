@@ -1,0 +1,35 @@
+{{  $robotsGenerate := false -}}
+{{- if or (isset $.Params.robots "index") (isset $.Params.robots "follow") }}
+{{-     $robotsGenerate = true -}}
+{{- else if or (isset $.Site.Params.robots "index") (isset $.Site.Params.robots "follow") -}}
+{{-     $robotsGenerate = true -}}
+{{- end -}}
+{{- if eq $robotsGenerate true -}}
+{{-     $robotsIndex := true -}}
+{{-     $robotsFollow := true -}}
+{{-     if isset $.Site.Params "robots" -}}
+{{-         if isset $.Site.Params.robots "index" -}}
+{{-             $robotsIndex = $.Site.Params.robots.index -}}
+{{-         end -}}
+{{-         if isset $.Site.Params.robots "follow" -}}
+{{-             $robotsFollow = $.Site.Params.robots.follow -}}
+{{-         end -}}
+{{-     end -}}
+{{-     if isset $.Params "robots" -}}
+{{-         if isset $.Params.robots "index" -}}
+{{-             $robotsIndex = $.Params.robots.index -}}
+{{-         end -}}
+{{-         if isset $.Params.robots "follow" -}}
+{{-             $robotsFollow = $.Params.robots.follow -}}
+{{-         end -}}
+{{-     end -}}
+{{-     if and (eq $robotsIndex true) (eq $robotsFollow true) }}
+    <meta name="robots" content="index, follow" />
+{{-     else if and (eq $robotsIndex true) (eq $robotsFollow false) }}
+    <meta name="robots" content="index, nofollow" />
+{{-     else if and (eq $robotsIndex false) (eq $robotsFollow true) }}
+    <meta name="robots" content="noindex, follow" />
+{{-     else if and (eq $robotsIndex false) (eq $robotsFollow false) }}
+    <meta name="robots" content="noindex, nofollow" />
+{{-     end -}}
+{{- end -}}
