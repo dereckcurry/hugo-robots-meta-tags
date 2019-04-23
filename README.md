@@ -32,27 +32,27 @@ Every Hugo theme is a bit different, so the instructions below are somewhat gene
 
 Place the **robots.html** partial template file in the the **/layouts/partials/** directory.
 
-{{< highlight plain >}}
+```
 root
     layouts
         partials
             robots.html
-{{< /highlight >}}
+```
 
 Next, you'll need to copy a theme template file to the **/layouts/** directory. The exact subdirectory that you will need to use is dependent upon your themes current directory structure. So most likely you'll need to replicate the approprate structure in the **/layouts/** directory.
 
 The theme layout template file you need to copy is the one that controls the **\<head\>** content for the pages on your site. For my site's theme, that was the **baseof.html** template. So I copied the file to the **/layouts/_default/** directory, which matched the directory structure of my theme.
 
-{{< highlight plain >}}
+```
 root
     layouts
         _default
             baseof.html
-{{< /highlight >}}
+```
 
 Next, modify the copy of **baseof.html** file to include the **robots.html** partial template.
 
-{{< highlight go-html-template >}}
+```
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
     <head>
@@ -66,7 +66,7 @@ Next, modify the copy of **baseof.html** file to include the **robots.html** par
         ... Template Body Stuff
     </body>
 </html>
-{{< /highlight >}}
+```
 
 The next time the site is compiled/generated, the **robots.html** template should be used to include the **robots** meta tag where appropriate. To include the **robots** meta tag, you'll need to set some configuration values in either the site configuration or the page front matter configuration.
 
@@ -79,11 +79,11 @@ To include the **robots** meta tag on only select pages of the site, see the nex
 
 The site configuration example below is using TOML for the configuration file. Make modifications appropriate to your site depending on the syntax your site configuration uses.
 
-{{< highlight toml >}}
+```
 [params.robots]
     index = true
     follow = true
-{{< /highlight >}}
+```
 
 For the above example site configuration, after compiling/generated the site every page should include **\<meta name="robots" content="index, follow" /\>** in the **\<head\>** section of the web page source.
 
@@ -98,14 +98,14 @@ The page front matter **robots** parameters are also optional, as the code will 
 
 The page front matter example below is using TOML. If you use a different configuration syntax, you'll need to make modifications appropriate for your site.
 
-{{< highlight toml >}}
+```
 +++
 Title = "A Page That Should Not Be Indexed"
 [robots]
     index = false
     follow = true
 +++
-{{< /highlight >}}
+```
 
 After configuration, the next time the site is compiled/generated, the page should include a **robots** meta tag. For the above example page front matter configuration, the page should include **\<meta name="robots" content="noindex, follow" /\>** in the **\<head\>** section of the web page source.
 
